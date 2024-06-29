@@ -1,5 +1,7 @@
+//changing the values of marks to get different grades
 let marks = 100;
 
+//function that assigns grades
 let grade;
 if (marks > 79) {
   grade = "A";
