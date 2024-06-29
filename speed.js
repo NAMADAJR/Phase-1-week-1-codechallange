@@ -21,6 +21,7 @@ function checkSpeed(speed) {
 }
 
 /*
+tests
 checkSpeed(80); // Output: Points: 2
 checkSpeed(65); // Output: Ok
 checkSpeed(95); // Output: License suspended
