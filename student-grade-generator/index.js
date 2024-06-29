@@ -1,4 +1,4 @@
-let marks = 59;
+let marks = 100;
 
 let grade;
 if (marks > 79) {
