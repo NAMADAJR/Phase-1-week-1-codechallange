@@ -1,84 +1,117 @@
-function calculateNetSalary(basicSalary, benefits) {
-  // Constants for tax rates and deductions
-  const TAX_BANDS = [
-    { limit: 24000, rate: 0.1 },
-    { limit: 16000, rate: 0.15 },
-    { limit: 14000, rate: 0.2 },
-    { limit: 12000, rate: 0.25 },
-    { limit: 0, rate: 0.3 },
-  ];
-
-  const NHIF_RATES = [
-    { limit: 6000, deduction: 170 },
-    { limit: 8000, deduction: 250 },
-    { limit: 12000, deduction: 400 },
-    { limit: 18000, deduction: 600 },
-    { limit: 25000, deduction: 750 },
-    { limit: 30000, deduction: 850 },
-    { limit: 35000, deduction: 900 },
-    { limit: 40000, deduction: 950 },
-    { limit: 45000, deduction: 1000 },
-    { limit: 50000, deduction: 1100 },
-    { limit: 60000, deduction: 1200 },
-    { limit: 70000, deduction: 1300 },
-    { limit: 80000, deduction: 1400 },
-    { limit: 90000, deduction: 1500 },
-    { limit: 100000, deduction: 1600 },
-  ];
-
-  const NSSF_RATE_EMPLOYEE = 0.06;
-  const NSSF_RATE_EMPLOYER = 0.06;
-
-  // Calculate gross salary
-  let grossSalary = basicSalary + benefits;
-
-  // Calculate NHIF deduction
-  let nhifDeduction = 0;
-  for (let i = 0; i < NHIF_RATES.length; i++) {
-    if (grossSalary <= NHIF_RATES[i].limit) {
-      nhifDeduction = NHIF_RATES[i].deduction;
-      break;
-    }
+//this function determines the NHIF contribution based on the gross salary
+const calculateNHIF = (grossSalary) => {
+  if (grossSalary >= 0 && grossSalary <= 5999) {
+    return 150;
+  } else if (grossSalary >= 6000 && grossSalary <= 7999) {
+    return 300;
+  } else if (grossSalary >= 8000 && grossSalary <= 11999) {
+    return 400;
+  } else if (grossSalary >= 12000 && grossSalary <= 14999) {
+    return 500;
+  } else if (grossSalary >= 15000 && grossSalary <= 19999) {
+    return 600;
+  } else if (grossSalary >= 20000 && grossSalary <= 24999) {
+    return 750;
+  } else if (grossSalary >= 25000 && grossSalary <= 29999) {
+    return 850;
+  } else if (grossSalary >= 30000 && grossSalary <= 34999) {
+    return 950;
+  } else if (grossSalary >= 35000 && grossSalary <= 39999) {
+    return 1000;
+  } else if (grossSalary >= 40000 && grossSalary <= 44999) {
+    return 1000;
+  } else if (grossSalary >= 45000 && grossSalary <= 49999) {
+    return 1100;
+  } else if (grossSalary >= 50000 && grossSalary <= 59999) {
+    return 1200;
+  } else if (grossSalary >= 60000 && grossSalary <= 69999) {
+    return 1300;
+  } else if (grossSalary >= 70000 && grossSalary <= 79000) {
+    return 1400;
+  } else if (grossSalary >= 80000 && grossSalary <= 89999) {
+    return 1500;
+  } else if (grossSalary >= 90000 && grossSalary <= 99999) {
+    return 1600;
+  } else if (grossSalary >= 100000) {
+    return 1700;
   }
-  if (nhifDeduction === 0) {
-    nhifDeduction = 1700; // Max NHIF deduction
-  }
+};
 
-  // Calculate NSSF deduction
-  let nssfDeduction = grossSalary * NSSF_RATE_EMPLOYEE;
+//function that calculates paye
+function calculatePAYE(monthlyPay) {
+  const personalRelief = 2400;
+  const ownerOccupierInterest = 25000;
+  const isDisabled = false;
+  const annualPersonalRelief = personalRelief * 12;
+  const annualInsuranceRelief = 60000;
+  const annualPensionContribution = 240000;
+  const annualHousingRelief = 108000;
+  const annualOwnerOccupierInterest = Math.min(
+    300000,
+    ownerOccupierInterest * 12
+  );
+  const annualDisabilityExemption = isDisabled ? 1800000 : 0;
 
-  // Calculate taxable income
-  let taxableIncome = grossSalary - nhifDeduction - nssfDeduction;
-
-  // Calculate PAYE (tax) deduction
+  let annualPay = monthlyPay * 12;
   let tax = 0;
-  for (let i = 0; i < TAX_BANDS.length; i++) {
-    if (taxableIncome > TAX_BANDS[i].limit) {
-      tax += (taxableIncome - TAX_BANDS[i].limit) * TAX_BANDS[i].rate;
-      taxableIncome = TAX_BANDS[i].limit;
-    }
+
+  if (annualPay <= 288000) {
+    tax = annualPay * 0.1;
+  } else if (annualPay <= 388000) {
+    let taxForFirstBracket = 288000 * 0.1;
+    let remainingAnnualPay = annualPay - 288000;
+    tax = taxForFirstBracket + remainingAnnualPay * 0.25;
+  } else {
+    let taxForFirstBracket = 288000 * 0.1;
+    let taxForSecondBracket = 100000 * 0.25;
+    let remainingAnnualPay = annualPay - 388000;
+    tax = taxForFirstBracket + taxForSecondBracket + remainingAnnualPay * 0.3;
   }
 
-  // Calculate net salary
-  let netSalary = grossSalary - nhifDeduction - nssfDeduction - tax;
+  // Apply annual reliefs and return to monthly
+  let annualTax =
+    tax -
+    annualPersonalRelief -
+    annualInsuranceRelief -
+    annualPensionContribution -
+    annualHousingRelief -
+    annualOwnerOccupierInterest -
+    annualDisabilityExemption;
 
-  // Return all calculated values
-  return {
-    "Gross Salary": grossSalary,
-    "NHIF Deduction": nhifDeduction,
-    "NSSF Deduction": nssfDeduction,
-    "Tax (PAYE)": tax,
-    "Net Salary": netSalary,
-  };
+  annualTax = Math.max(annualTax, 0);
+
+  return annualTax / 12;
 }
 
-// Example usage:
-const basicSalary = parseFloat(prompt("Enter Basic Salary:"));
-const benefits = parseFloat(prompt("Enter Benefits:"));
+//function calculates NSSF
+const calculateNSSF = (monthlySalary) => {
+  const tier1Limit = 7000;
+  const tier2Limit = 36000;
 
-const salaryDetails = calculateNetSalary(basicSalary, benefits);
+  let tier1Contribution = Math.min(monthlySalary, tier1Limit) * 0.06;
+  let tier2Contribution = 0;
 
-console.log("\nSalary Details:");
-for (const key in salaryDetails) {
-  console.log(`${key}: KES ${salaryDetails[key].toFixed(2)}`);
-}
+  if (monthlySalary > tier1Limit) {
+    tier2Contribution =
+      Math.min(monthlySalary - tier1Limit, tier2Limit - tier1Limit) * 0.06;
+  }
+
+  let totalEmployeeContribution = tier1Contribution + tier2Contribution;
+  let totalEmployerContribution = tier1Contribution + tier2Contribution;
+
+  return totalEmployeeContribution + totalEmployerContribution;
+};
+
+//calculates net salary
+const calculateNetSalary = (basicSalary, benefits = 0) => {
+  const grossSalary = basicSalary + benefits;
+  const nssfDeduction = calculateNSSF(grossSalary);
+  const taxableIncome = grossSalary - nssfDeduction;
+  const paye = calculatePAYE(taxableIncome);
+  const nhifDeduction = calculateNHIF(grossSalary);
+  const netSalary = grossSalary - nssfDeduction - paye - nhifDeduction;
+  return netSalary;
+};
+
+//value entered is gross salary to be taxed
+console.log(calculateNetSalary(100000));

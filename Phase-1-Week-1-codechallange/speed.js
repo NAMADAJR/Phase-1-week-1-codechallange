@@ -1,5 +1,3 @@
-var speed;
-
 //constants
 const speedLimit = 70;
 
@@ -23,7 +21,6 @@ function checkSpeed(speed) {
 }
 
 checkSpeed(89);
-console.log(`The speed is ${speed}`);
 
 /*
 tests
