@@ -1,10 +1,10 @@
-#Phase 1 week 1 Code challange
+#Phase 1 week 1 Code challange#
 
-##Project Description
+##Project Description##
 
-##What your applications do
+##What your applications do##
 
-##1.Student Grade Generator
+###1.Student Grade Generator###
 
 The Mark is enetered here
 
@@ -35,7 +35,7 @@ This is displays the mark and grade
 console.log(`The grade for ${marks} marks is: ${grade}`);
 ```
 
-###2.Speed Detector
+###2.Speed Detector###
 
 These are the constants used in the computation of the computations
 
@@ -69,7 +69,7 @@ The value entered here is the speed of the car
 checkSpeed(89);
 ```
 
-###3.Net Salary Calculator
+###3.Net Salary Calculator###
 
 This function determines the NHIF contribution based on the gross salary
 
