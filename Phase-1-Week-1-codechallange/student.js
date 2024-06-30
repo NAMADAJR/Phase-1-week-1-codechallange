@@ -15,4 +15,5 @@ if (marks > 79) {
   grade = "E";
 }
 
+//shows marks and grade
 console.log(`The grade for ${marks} marks is: ${grade}`);
