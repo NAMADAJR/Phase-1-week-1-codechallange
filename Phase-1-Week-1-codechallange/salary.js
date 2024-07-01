@@ -1,5 +1,5 @@
 //this function determines the NHIF contribution based on the gross salary
-const calculateNHIF = (grossSalary) => {
+const calculatingNHIF = (grossSalary) => {
   if (grossSalary >= 0 && grossSalary <= 5999) {
     return 150;
   } else if (grossSalary >= 6000 && grossSalary <= 7999) {
@@ -38,7 +38,7 @@ const calculateNHIF = (grossSalary) => {
 };
 
 // this function that calculates paye
-function calculatePAYE(monthlyPay) {
+function calculatingPAYE(monthlyPay) {
   const personalRelief = 2400;
   const ownerOccupierInterest = 25000;
   const isDisabled = false;
