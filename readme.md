@@ -1,16 +1,21 @@
 # Phase 1 week 1 Code challange
 
+## By Namada JUnior
+
 ## Project Description
 
 This project has three parts.The 3 programs run indepedently and comprise of the following:
 
 _Student grade Generator_
+
 It is a progrmam that accepts marks as an input and assigns the corresponding grade.
 
 _Speed Detector_
+
 It is a program the takes the speed of a car and checks it against the speed limit and awards the appropriate demerit point or suspends the license in severe cases.
 
 _Net Salary Calculator_
+
 It is a program that accept the gross salary of an individual and computes the taxes to be paid then adds the reliefs and returns the individuals net salary.
 
 ## What the applications do
@@ -157,3 +162,7 @@ function calculatePAYE(monthlyPay) {
     tax = taxForFirstBracket + taxForSecondBracket + remainingAnnualPay * 0.3;
   }
 ```
+
+## Technology used
+
+Javascript - Used Javascript to create functions and conditions that manipulate items on the webpage.
