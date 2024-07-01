@@ -37,7 +37,7 @@ const calculateNHIF = (grossSalary) => {
   }
 };
 
-//function that calculates paye
+// this function that calculates paye
 function calculatePAYE(monthlyPay) {
   const personalRelief = 2400;
   const ownerOccupierInterest = 25000;
@@ -67,51 +67,4 @@ function calculatePAYE(monthlyPay) {
     let remainingAnnualPay = annualPay - 388000;
     tax = taxForFirstBracket + taxForSecondBracket + remainingAnnualPay * 0.3;
   }
-
-  // Apply annual reliefs and return to monthly
-  let annualTax =
-    tax -
-    annualPersonalRelief -
-    annualInsuranceRelief -
-    annualPensionContribution -
-    annualHousingRelief -
-    annualOwnerOccupierInterest -
-    annualDisabilityExemption;
-
-  annualTax = Math.max(annualTax, 0);
-
-  return annualTax / 12;
 }
-
-//function calculates NSSF
-const calculateNSSF = (monthlySalary) => {
-  const tier1Limit = 7000;
-  const tier2Limit = 36000;
-
-  let tier1Contribution = Math.min(monthlySalary, tier1Limit) * 0.06;
-  let tier2Contribution = 0;
-
-  if (monthlySalary > tier1Limit) {
-    tier2Contribution =
-      Math.min(monthlySalary - tier1Limit, tier2Limit - tier1Limit) * 0.06;
-  }
-
-  let totalEmployeeContribution = tier1Contribution + tier2Contribution;
-  let totalEmployerContribution = tier1Contribution + tier2Contribution;
-
-  return totalEmployeeContribution + totalEmployerContribution;
-};
-
-//calculates net salary
-const calculateNetSalary = (basicSalary, benefits = 0) => {
-  const grossSalary = basicSalary + benefits;
-  const nssfDeduction = calculateNSSF(grossSalary);
-  const taxableIncome = grossSalary - nssfDeduction;
-  const paye = calculatePAYE(taxableIncome);
-  const nhifDeduction = calculateNHIF(grossSalary);
-  const netSalary = grossSalary - nssfDeduction - paye - nhifDeduction;
-  return netSalary;
-};
-
-//value entered is gross salary to be taxed
-console.log(calculateNetSalary(100000));
