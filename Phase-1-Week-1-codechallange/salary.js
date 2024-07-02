@@ -1,5 +1,5 @@
 //this function determines the NHIF contribution based on the gross salary
-const calculatingNHIF = (grossSalary) => {
+const calculateNHIF = (grossSalary) => {
   if (grossSalary >= 0 && grossSalary <= 5999) {
     return 150;
   } else if (grossSalary >= 6000 && grossSalary <= 7999) {
@@ -37,8 +37,8 @@ const calculatingNHIF = (grossSalary) => {
   }
 };
 
-// this function that calculates paye
-function calculatingPAYE(monthlyPay) {
+//function that calculates paye
+function calculatePAYE(monthlyPay) {
   const personalRelief = 2400;
   const ownerOccupierInterest = 25000;
   const isDisabled = false;
@@ -67,4 +67,18 @@ function calculatingPAYE(monthlyPay) {
     let remainingAnnualPay = annualPay - 388000;
     tax = taxForFirstBracket + taxForSecondBracket + remainingAnnualPay * 0.3;
   }
+
+  // Apply annual reliefs and return to monthly
+  let annualTax =
+    tax -
+    annualPersonalRelief -
+    annualInsuranceRelief -
+    annualPensionContribution -
+    annualHousingRelief -
+    annualOwnerOccupierInterest -
+    annualDisabilityExemption;
+
+  annualTax = Math.max(annualTax, 0);
+
+  return annualTax / 12;
 }

@@ -31,24 +31,25 @@ let marks = 100;
 This finction assigns the mark to the corresponding grade
 
 ```js
-let grade;
-if (marks > 79) {
-  grade = "A";
-} else if (marks >= 60) {
-  grade = "B";
-} else if (marks >= 50) {
-  grade = "C";
-} else if (marks >= 40) {
-  grade = "D";
-} else {
-  grade = "E";
+function grade(marks) {
+  if (isNaN(marks)) {  
+    return "Enter a number!";
+  } else if (marks > 100) {  
+    return "Marks should be less that 100";
+  } else if (marks < 0) {
+    return "Marks should be more that 0";  
+  } else if (marks > 79) {
+    return "A";
+  } else if (marks >= 60) {
+    return "B";
+  } else if (marks >= 50) {
+    return "C";
+  } else if (marks >= 40) {
+    return "D";
+  } else {
+    return "E";
+  }
 }
-```
-
-This is displays the mark and grade
-
-```js
-console.log(`The grade for ${marks} marks is: ${grade}`);
 ```
 
 ### 2.Speed Detector
@@ -161,7 +162,23 @@ function calculatePAYE(monthlyPay) {
     let remainingAnnualPay = annualPay - 388000;
     tax = taxForFirstBracket + taxForSecondBracket + remainingAnnualPay * 0.3;
   }
+  
+  let annualTax =
+    tax -
+    annualPersonalRelief -
+    annualInsuranceRelief -
+    annualPensionContribution -
+    annualHousingRelief -
+    annualOwnerOccupierInterest -
+    annualDisabilityExemption;
+
+  
+  annualTax = Math.max(annualTax, 0);
+
+  return annualTax / 12; 
+}
 ```
+
 
 ## Technology used
 
